@@ -1,0 +1,6 @@
+# Terraform files
+*terraform*
+*.tfplan
+
+# Apple
+.DS_Store

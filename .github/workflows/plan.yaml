@@ -1,0 +1,58 @@
+name: Plan OKE
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - feature/*
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Plan OKE Cluster
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+    
+      - name: 'Write Config & Key Files'
+        run: |
+          mkdir ~/.oci
+          echo "[DEFAULT]" >> ~/.oci/config
+          echo "user=${{secrets.OCI_USER_OCID}}" >> ~/.oci/config
+          echo "fingerprint=${{secrets.OCI_FINGERPRINT}}" >> ~/.oci/config
+          echo "region=${{secrets.OCI_REGION}}" >> ~/.oci/config
+          echo "tenancy=${{secrets.OCI_TENANCY_OCID}}" >> ~/.oci/config
+          echo "key_file=~/.oci/key.pem" >> ~/.oci/config
+          echo "${{secrets.OCI_KEY_FILE}}" >> ~/.oci/key.pem
+        
+      - name: 'Install OCI CLI'
+        run: |
+          curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+          chmod +x install.sh
+          ./install.sh --accept-all-defaults
+          echo "/home/runner/bin" >> $GITHUB_PATH
+          exec -l $SHELL
+
+      - name: 'Fix OCI Config File Permissions'
+        run: |
+          oci setup repair-file-permissions --file /home/runner/.oci/config
+          oci setup repair-file-permissions --file /home/runner/.oci/key.pem
+
+      - name: 'Download TF State'
+        run: |
+          curl -X GET -H "Content-Type: application/json" "${{secrets.TF_BUCKET}}" --output terraform.tfstate
+   
+      - name: 'Terraform Setup'
+        uses: hashicorp/setup-terraform@v3
+
+      - name: 'Terraform Init'
+        run: terraform init
+
+      - name: 'Terraform Plan'
+        run: terraform plan
+        env:
+          TF_VAR_tenancy_ocid: ${{secrets.OCI_TENANCY_OCID}}
+          TF_VAR_region: ${{secrets.OCI_REGION}}
+          TF_VAR_user_ocid: ${{secrets.OCI_USER_OCID}}
+          TF_VAR_fingerprint: ${{secrets.OCI_FINGERPRINT}}
+          TF_VAR_private_key_path: ${{secrets.OCI_KEY_FILE}}
+          TF_VAR_ssh_public_key: ${{secrets.SSH_PUBLIC_KEY}}
