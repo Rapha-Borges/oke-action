@@ -75,3 +75,15 @@ A Action de `apply` é manual e pode ser executada na aba `Actions` do repositó
 A Action de `destroy` é manual e pode ser executada na aba `Actions` do repositório. Ela irá destruir automaticamente, após o inicio da execução, o cluster OKE na Oracle Cloud.
 
 * Atenção: Antes de executar o `Destroy`, valide que nenhuma outra Action está em execução, pois isso pode "quebrar" o arquivo de estado do Terraform. 
+
+# Observações sobre o Terraform
+
+- O projeto está configurado para ser executado na região `sa-saopaulo-1` da Oracle Cloud.
+
+- O cluster OKE será criado com 1 node pool e 2 nodes.
+
+- Cada node possui 2 CPU e 12GB de memória e utilizam a arquitetura `arch64 (ARM)`.
+
+- A versão do Kubernetes é a `v1.29.1`.
+
+- Qualquer alteração nas configurações do cluster OKE pode ser feita no arquivo `variables.tf`.
