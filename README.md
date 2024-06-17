@@ -1,6 +1,6 @@
 # Terraform OKE Action
 
-Esse repositório contém três Action do GitHub responsáveis pelo `plan`, `apply` e `destroy` de um cluster OKE na Oracle Cloud utilizando Terraform. O projeto de exemplo do Terraform foi criado no repositório [OKE-FREE]()
+Esse repositório contém três Action do GitHub responsáveis pelo `plan`, `apply` e `destroy` de um cluster OKE na Oracle Cloud utilizando Terraform. O projeto de exemplo do Terraform foi criado no repositório [OKE-FREE](https://github.com/Rapha-Borges/oke-free)
 
 # Pré-requisitos
 
