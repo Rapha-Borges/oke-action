@@ -2,7 +2,7 @@
 
 variable "compartment_name" {
   type    = string
-  default = "pick"
+  default = "oke-free"
 }
 
 variable "region" {
