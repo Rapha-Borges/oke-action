@@ -7,7 +7,7 @@ jobs:
     name: Deploy to OKE
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
     
       - name: 'Write Config & Key Files'
         run: |
