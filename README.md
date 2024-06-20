@@ -8,13 +8,17 @@ Esse repositório contém três Action do GitHub responsáveis pelo `plan`, `app
 
 - Informações de login e API Key da Oracle Cloud, um par de chaves SSH e um bucket no OCI.
 
+- Terraform ou OpenTofu instalado.
+
+- OCI CLI instalado e configurado com as credenciais da sua conta Oracle Cloud.
+
 ## Obtendo as informações de login e API Key da Oracle Cloud
 
 1. Acesse o console da Oracle Cloud e vá para a página [API Keys](https://cloud.oracle.com/identity/domains/my-profile/api-keys) nos detalhes do usuário.
 
 2. Clique em "Add API Key" e faça o download da `Private Key`.
 
-3. Clique em `Add` e copie as informações de `Tenancy OCID`, `User OCID` e `Fingerprint`.
+3. Clique em `Add` e copie as informações de `Tenancy OCID`, `User OCID`, `Fingerprint` e `Region`.
 
 ## Criando um par de chaves SSH
 
@@ -50,9 +54,9 @@ Agora que você tem todas as informações necessárias, será necessário confi
 
 - `OCI_FINGERPRINT`: Fingerprint da chave API.
 
-- `OCI_KEY_FILE`: Conteúdo da chave privada.
+- `OCI_KEY_FILE`: Conteúdo da chave `.pem` privada obtida no download da API Key.
 
-- `SSH_PUBLIC_KEY`: Conteúdo da chave pública.
+- `SSH_PUBLIC_KEY`: Conteúdo da chave ssh pública (`.pub`).
 
 - `TF_BUCKET`: Link do bucket no OCI.
 
@@ -74,7 +78,21 @@ A Action de `apply` é manual e pode ser executada na aba `Actions` do repositó
 
 A Action de `destroy` é manual e pode ser executada na aba `Actions` do repositório. Ela irá destruir automaticamente, após o início da execução, o cluster OKE na Oracle Cloud.
 
-* Atenção: Antes de executar o `Destroy`, valide que nenhuma outra Action está em execução, pois isso pode "quebrar" o arquivo de estado do Terraform. 
+* Atenção: Antes de executar o `Destroy`, valide que nenhuma outra Action está em execução, pois isso pode "quebrar" o arquivo de estado do Terraform.
+
+# Configurando o OCI CLI
+
+Para configurar o OCI CLI, execute o comando `oci setup config` e siga as instruções.
+
+# Criando o Kubeconfig
+
+Após a execução do `Apply`, será necessário criar o arquivo `kubeconfig` para acessar o cluster OKE. 
+
+1. Acesse o console da Oracle Cloud e vá para a página [Clusters](https://cloud.oracle.com/containers/clusters).
+
+2. Selecione o `Compartment` onde o cluster foi criado e clique no nome do cluster.
+
+3. Clique em `Access Cluster` -> `Local Access` e siga as instruções para criar o arquivo `kubeconfig` de um um `public endpoint`.
 
 # Observações sobre o Terraform
 
