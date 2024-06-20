@@ -4,7 +4,7 @@ Esse repositório contém três Action do GitHub responsáveis pelo `plan`, `app
 
 # Pré-requisitos
 
-- Fork desse repositório e permição para executar Actions. Na aba `Settings` -> `Actions` -> `General` -> `Allow all actions and reusable workflows`.
+- Fork desse repositório e permissão para executar Actions. Na aba `Settings` -> `Actions` -> `General` -> `Allow all actions and reusable workflows`.
 
 - Informações de login e API Key da Oracle Cloud, um par de chaves SSH e um bucket no OCI.
 
@@ -22,9 +22,9 @@ Esse repositório contém três Action do GitHub responsáveis pelo `plan`, `app
 
 ## Criando um bucket no OCI
 
-1. Em [Compartmetns](https://cloud.oracle.com/identity/compartments), clique em `Create Compartment` e crie um novo compartimento, diferente do que vamos utilizar para o cluster OKE.
+1. Em [Compartments](https://cloud.oracle.com/identity/compartments), clique em `Create Compartment` e crie um compartimento, diferente do que vamos utilizar para o cluster OKE.
 
-2. em [Object Storage & Archive Storage](https://cloud.oracle.com/object-storage/buckets), selecione o compartimento criado e clique em `Create Bucket` e então `Create` para criar um novo bucket com as configurações padrão.
+2. em [Object Storage & Archive Storage](https://cloud.oracle.com/object-storage/buckets), selecione o compartimento criado e clique em `Create Bucket` e então `Create` para criar um bucket com as configurações padrão.
 
 3. Em [Pre-authenticated Requests](https://cloud.oracle.com/object-storage/pre-authenticated-requests), clique em `Create Pre-authenticated Request`.
 
@@ -32,7 +32,7 @@ Esse repositório contém três Action do GitHub responsáveis pelo `plan`, `app
 
 5. Marque a opção `Permit object read and writes` e clique em `Create`.
 
-6. Copie o link gerado no campo `Pre-Authenticated Request URL` e salve, pois ele será utilizado como variável de ambiente.
+6. Copie o link gerado no campo `Pre-Authenticated Request URL` e salve, ele será utilizado como variável de ambiente.
 
 # Configuração
 
@@ -50,7 +50,7 @@ Agora que você tem todas as informações necessárias, será necessário confi
 
 - `OCI_FINGERPRINT`: Fingerprint da chave API.
 
-- `OCI_PRIVATE_KEY`: Conteúdo da chave privada.
+- `OCI_KEY_FILE`: Conteúdo da chave privada.
 
 - `SSH_PUBLIC_KEY`: Conteúdo da chave pública.
 
@@ -66,13 +66,13 @@ O `Plan` pode ser executado manualmente na aba `Actions` do repositório a qualq
 
 # Utilizando o Terraform Apply
 
-A Action de `apply` é manual e pode ser executada na aba `Actions` do repositório. Ela irá criar automaticamente, após o inicio da execução, o cluster OKE na Oracle Cloud, conforme o `Plan` gerado no último push.
+A Action de `apply` é manual e pode ser executada na aba `Actions` do repositório. Ela irá criar automaticamente, após o início da execução, o cluster OKE na Oracle Cloud, conforme o `Plan` gerado no último push.
 
 * Atenção: Antes de executar o `Apply`, valide que nenhuma outra Action está em execução, pois isso pode "quebrar" o arquivo de estado do Terraform.
 
 # Utilizando o Terraform Destroy
 
-A Action de `destroy` é manual e pode ser executada na aba `Actions` do repositório. Ela irá destruir automaticamente, após o inicio da execução, o cluster OKE na Oracle Cloud.
+A Action de `destroy` é manual e pode ser executada na aba `Actions` do repositório. Ela irá destruir automaticamente, após o início da execução, o cluster OKE na Oracle Cloud.
 
 * Atenção: Antes de executar o `Destroy`, valide que nenhuma outra Action está em execução, pois isso pode "quebrar" o arquivo de estado do Terraform. 
 

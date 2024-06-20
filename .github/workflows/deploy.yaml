@@ -34,9 +34,10 @@ jobs:
           oci setup repair-file-permissions --file /home/runner/.oci/key.pem
     
       - name: 'Download TF State'
+        continue-on-error: true
         run: |
-          curl -X GET -H "Content-Type: application/json" "${{secrets.TF_BUCKET}}" --output terraform.tfstate
-    
+          wget "${{secrets.TF_BUCKET}}"
+
       - name: 'Terraform Setup'
         uses: hashicorp/setup-terraform@v3
 
